@@ -1,11 +1,8 @@
 package driver;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -20,9 +17,9 @@ public class DriverHandlerTest {
 
     @Before
     public void initDriver() {
-        chromeDriver = DriverHelper.createDriver("CHROME", "src/main/resources/config/config_default.properties");
-        firefoxDriver = DriverHelper.createDriver("FIREFOX", "src/main/resources/config/config_default.properties");
-        edgeDriver = DriverHelper.createDriver("EDGE", "src/main/resources/config/config_default.properties");
+        chromeDriver = DriverFactory.createDriver("CHROME", "src/main/resources/config/config_default.properties");
+        firefoxDriver = DriverFactory.createDriver("FIREFOX", "src/main/resources/config/config_default.properties");
+        edgeDriver = DriverFactory.createDriver("EDGE", "src/main/resources/config/config_default.properties");
     }
 
     @Test

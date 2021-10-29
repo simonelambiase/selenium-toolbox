@@ -17,9 +17,9 @@ import utils.LoggerUtils;
  *
  */
 
-public class DriverHelper {
+public class DriverFactory {
 
-    static Logger log = LoggerUtils.createLogger(DriverHelper.class);
+    static Logger log = LoggerUtils.createLogger(DriverFactory.class);
 
     public static DriverHandler createDriver ( String driverType ) {
 

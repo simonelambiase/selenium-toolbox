@@ -1,7 +1,9 @@
 package driver;
 
 import entities.Configuration;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 
 /**
@@ -16,23 +18,27 @@ class DriverHandler {
 
     private WebDriver driver;
     private Configuration configuration;
+    private ElementsHelper elementsHelper;
     private DriverType driverType;
 
     protected DriverHandler(WebDriver driver, DriverType type ) {
         this.driver = driver;
         this.driverType = type;
+        this.elementsHelper = new ElementsHelperDefault(driver);
     }
 
     protected DriverHandler(WebDriver driver, String configurationFile, DriverType type  ) {
         this.driver = driver;
         this.configuration = new Configuration(configurationFile);
         this.driverType = type;
+        this.elementsHelper = new ElementsHelperDefault(driver);
     }
 
     protected DriverHandler(WebDriver driver, Configuration configuration, DriverType type  ) {
         this.driver = driver;
         this.configuration = configuration;
         this.driverType = type;
+        this.elementsHelper = new ElementsHelperDefault(driver);
     }
 
     public WebDriver getDriver() {
@@ -63,11 +69,28 @@ class DriverHandler {
         this.driverType = driverType;
     }
 
-    public void openUrl ( String url ) {
-        this.driver.get(url);
+    public ElementsHelper getElementsHelper() {
+        return elementsHelper;
     }
 
     public void closeDriver() {
         driver.quit();
     }
+
+    public void openUrl ( String url ) {
+        driver.get(url);
+    }
+
+    public void clickElement ( By by ) {
+        elementsHelper.clickElement(by);
+    }
+
+    public void clickElement ( WebElement element ) {
+        elementsHelper.clickElement(element);
+    }
+
+    public WebElement getElement ( By by ) {
+        return elementsHelper.getElement(by);
+    }
+
 }
