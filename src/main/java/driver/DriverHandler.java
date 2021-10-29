@@ -16,19 +16,23 @@ class DriverHandler {
 
     private WebDriver driver;
     private Configuration configuration;
+    private DriverType driverType;
 
-    protected DriverHandler(WebDriver driver) {
+    protected DriverHandler(WebDriver driver, DriverType type ) {
         this.driver = driver;
+        this.driverType = type;
     }
 
-    protected DriverHandler(WebDriver driver, String configurationFile ) {
+    protected DriverHandler(WebDriver driver, String configurationFile, DriverType type  ) {
         this.driver = driver;
         this.configuration = new Configuration(configurationFile);
+        this.driverType = type;
     }
 
-    protected DriverHandler(WebDriver driver, Configuration configuration ) {
+    protected DriverHandler(WebDriver driver, Configuration configuration, DriverType type  ) {
         this.driver = driver;
         this.configuration = configuration;
+        this.driverType = type;
     }
 
     public WebDriver getDriver() {
@@ -47,7 +51,23 @@ class DriverHandler {
         this.configuration = configuration;
     }
 
+    public void setConfigurationFileName ( String configurationFileName ) {
+        this.configuration = new Configuration(configurationFileName);
+    }
+
+    public DriverType getDriverType() {
+        return driverType;
+    }
+
+    public void setDriverType(DriverType driverType) {
+        this.driverType = driverType;
+    }
+
     public void openUrl ( String url ) {
         this.driver.get(url);
+    }
+
+    public void closeDriver() {
+        driver.quit();
     }
 }
