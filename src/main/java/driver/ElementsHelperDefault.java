@@ -97,12 +97,4 @@ public class ElementsHelperDefault implements ElementsHelper {
         exc.executeScript("arguments[0].click",elem);
     }
 
-    @Override
-    public void getAttribute(By by, String attribute) {
-    }
-
-    @Override
-    public void getAttribute(WebElement element, String attribute) {
-
-    }
 }

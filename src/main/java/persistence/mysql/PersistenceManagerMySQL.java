@@ -1,6 +1,5 @@
 package persistence.mysql;
 
-import demo.demo_entities.WebPage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -9,6 +8,7 @@ import persistence.PersistenceManager;
 import utils.LoggerUtils;
 
 import javax.persistence.Entity;
+import javax.persistence.Query;
 import java.util.Properties;
 
 public class PersistenceManagerMySQL implements PersistenceManager {
@@ -85,26 +85,31 @@ public class PersistenceManagerMySQL implements PersistenceManager {
     }
 
     @Override
-    public void saveObject( Object o ) {
+    public void saveObject( Object o) {
 
-        hibernateConfiguration.addAnnotatedClass(WebPage.class);
+        hibernateConfiguration.addAnnotatedClass(o.getClass());
         connect();
 
         if ( !o.getClass().isAnnotationPresent(Entity.class) ) {
             log.error("You must insert the hibernate annotations to your class for use the persistence manager." + "\nReference link: https://www.tutorialspoint.com/hibernate/hibernate_annotations.htm");
         } else {
+            session.beginTransaction();
             session.saveOrUpdate(o);
+            session.getTransaction().commit();
         }
     }
 
     @Override
-    public Object loadObject(Object id, Class obj) {
-        return null;
+    public Object loadObject(Object id, Class returnType ) {
+        session.beginTransaction();
+        Query query = session.createQuery("FROM " + returnType.getName() + " O WHERE O.id = " + id,returnType);
+        return query.getSingleResult();
     }
 
-
     @Override
-    public void executeQuery(String query) {
-
+    public Object executeQuery(String query) {
+        session.beginTransaction();
+        Query hQuery = session.createQuery(query);
+        return hQuery.getSingleResult();
     }
 }

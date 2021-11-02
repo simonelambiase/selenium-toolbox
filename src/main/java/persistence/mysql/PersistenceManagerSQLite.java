@@ -9,54 +9,36 @@ import utils.LoggerUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.Query;
+import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
 
-public class PersistenceManagerMariaDB implements PersistenceManager {
+public class PersistenceManagerSQLite implements PersistenceManager {
 
     private Logger log = LoggerUtils.createLogger(this.getClass());
-    private String hostName;
-    private String userName;
-    private String password;
-    private String databaseName;
-    private int port;
     private Properties hibernateProperties;
     private Configuration hibernateConfiguration = new Configuration();
     private Session session;
     private boolean alive = false;
 
-    public PersistenceManagerMariaDB(String hostName, String userName, String password, String databaseName) {
-        this.hostName = hostName;
-        this.userName = userName;
-        this.password = password;
-        this.databaseName = databaseName;
+    public PersistenceManagerSQLite( String fileName ) {
         this.hibernateProperties = new Properties();
-        String connectionString = "jdbc:mysql://$host:$port/$database".replace("$host",hostName).replace("$port","3306").replace("$database",databaseName);
+        File sqlLiteFile = new File(fileName.contains(".sqlite") ? fileName : fileName + ".sqlite");
+        if ( !sqlLiteFile.exists() ) {
+            try {
+                sqlLiteFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String connectionString = fileName.contains(".sqlite") ? "jdbc:sqlite:" + fileName : "jdbc:sqlite:" + fileName + ".sqlite";
         this.hibernateProperties.setProperty("hibernate.connection.url",connectionString);
-        this.hibernateProperties.setProperty("hibernate.connection.username",userName);
-        this.hibernateProperties.setProperty("hibernate.connection.password",password);
-        this.hibernateProperties.setProperty("dialect","org.hibernate.dialect.MariaDBDialect");
-        this.hibernateProperties.setProperty("hibernate.connection.driver_class","com.mysql.cj.jdbc.Driver");
+        this.hibernateProperties.setProperty("dialect","org.sqlite.hibernate.dialect.SQLiteDialect");
+        this.hibernateProperties.setProperty("hibernate.connection.driver_class","org.sqlite.JDBC");
         this.hibernateProperties.setProperty("hibernate.hbm2ddl.auto","update");
         this.hibernateProperties.setProperty("show_sql","true");
     }
 
-    public PersistenceManagerMariaDB(Logger log, String hostName, String userName, String password, String databaseName, int port) {
-        this.log = log;
-        this.hostName = hostName;
-        this.userName = userName;
-        this.password = password;
-        this.databaseName = databaseName;
-        this.port = port;
-        this.hibernateProperties = new Properties();
-        String connectionString = "jdbc:mysql://$host:$port/$database".replace("$host",hostName).replace("$port",String.valueOf(port)).replace("$database",databaseName);
-        this.hibernateProperties.setProperty("hibernate.connection.url",connectionString);
-        this.hibernateProperties.setProperty("hibernate.connection.username",userName);
-        this.hibernateProperties.setProperty("hibernate.connection.password",password);
-        this.hibernateProperties.setProperty("dialect","org.hibernate.dialect.MariaDBDialect");
-        this.hibernateProperties.setProperty("hibernate.connection.driver_class","com.mysql.cj.jdbc.Driver");
-        this.hibernateProperties.setProperty("hibernate.hbm2ddl.auto","update");
-        this.hibernateProperties.setProperty("show_sql","true");
-    }
 
     @Override
     public boolean connect() {
@@ -110,7 +92,6 @@ public class PersistenceManagerMariaDB implements PersistenceManager {
     public Object executeQuery(String query) {
         session.beginTransaction();
         Query hQuery = session.createQuery(query);
-        return hQuery.getSingleResult();
+        return hQuery.getResultList();
     }
-
 }
