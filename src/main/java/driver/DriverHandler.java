@@ -14,7 +14,7 @@ import org.openqa.selenium.WebElement;
  *
  */
 
-class DriverHandler {
+public class DriverHandler {
 
     private WebDriver driver;
     private Configuration configuration;

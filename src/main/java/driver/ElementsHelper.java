@@ -16,5 +16,7 @@ public interface ElementsHelper {
     void clickElement(WebElement element);
     void clickElementJS ( By by );
     void clickElementJS (WebElement elem );
+    void getAttribute ( By by, String attribute );
+    void getAttribute ( WebElement element, String attribute );
 
 }
