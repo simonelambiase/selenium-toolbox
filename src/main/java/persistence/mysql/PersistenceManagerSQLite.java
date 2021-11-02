@@ -39,7 +39,6 @@ public class PersistenceManagerSQLite implements PersistenceManager {
         this.hibernateProperties.setProperty("show_sql","true");
     }
 
-
     @Override
     public boolean connect() {
         hibernateConfiguration.addProperties(hibernateProperties);

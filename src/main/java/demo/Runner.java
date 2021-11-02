@@ -10,7 +10,7 @@ public class Runner {
         PersistenceManager sql = new PersistenceManagerSQLite("resources/test");
         sql.connect();
         sql.saveObject(new WebPage("Amazon","www.amazon.it"));
-        System.out.println(sql.executeQuery("FROM demo.entities.WebPage"));
+        System.out.println(sql.executeQuery("DROP WebPage"));
     }
 }
 
