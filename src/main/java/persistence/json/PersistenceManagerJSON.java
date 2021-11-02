@@ -7,10 +7,6 @@ public class PersistenceManagerJSON implements PersistenceManager {
 
     private Gson gson;
 
-    public PersistenceManagerJSON() {
-
-    }
-
     @Override
     public boolean connect() {
         return false;
@@ -37,14 +33,10 @@ public class PersistenceManagerJSON implements PersistenceManager {
     }
 
     @Override
-    public boolean loadObject(int id, Class objectType) {
-        return false;
+    public Object loadObject(Object id, Class obj) {
+        return null;
     }
 
-    @Override
-    public boolean loadObject(String key, Class objectType) {
-        return false;
-    }
 
     @Override
     public void executeQuery(String query) {

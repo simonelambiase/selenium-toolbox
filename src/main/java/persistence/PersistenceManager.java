@@ -13,7 +13,6 @@ public interface PersistenceManager {
     boolean isAlive();
     Object getConnection();
     void saveObject ( Object o );
-    boolean loadObject ( int id,  Class objectType );
-    boolean loadObject ( String key, Class objectType );
+    Object loadObject ( Object id, Class obj );
     void executeQuery ( String query );
 }

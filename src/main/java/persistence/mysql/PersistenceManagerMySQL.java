@@ -1,5 +1,6 @@
 package persistence.mysql;
 
+import demo.demo_entities.WebPage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -68,7 +69,9 @@ public class PersistenceManagerMySQL implements PersistenceManager {
 
     @Override
     public boolean close() {
-        return false;
+        session.close();
+        alive = session.isOpen();
+        return alive;
     }
 
     @Override
@@ -78,28 +81,27 @@ public class PersistenceManagerMySQL implements PersistenceManager {
 
     @Override
     public Object getConnection() {
-        return null;
+        return session;
     }
 
     @Override
-    public void saveObject(Object o) {
+    public void saveObject( Object o ) {
+
+        hibernateConfiguration.addAnnotatedClass(WebPage.class);
+        connect();
 
         if ( !o.getClass().isAnnotationPresent(Entity.class) ) {
             log.error("You must insert the hibernate annotations to your class for use the persistence manager." + "\nReference link: https://www.tutorialspoint.com/hibernate/hibernate_annotations.htm");
         } else {
-            session.save(o);
+            session.saveOrUpdate(o);
         }
     }
 
     @Override
-    public boolean loadObject(int id, Class objectType) {
-        return false;
+    public Object loadObject(Object id, Class obj) {
+        return null;
     }
 
-    @Override
-    public boolean loadObject(String key, Class objectType) {
-        return false;
-    }
 
     @Override
     public void executeQuery(String query) {

@@ -3,6 +3,7 @@ package persistence.mysql;
 import demo.demo_entities.WebPage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import persistence.PersistenceManager;
@@ -54,7 +55,7 @@ public class PersistenceManagerMariaDB implements PersistenceManager {
         this.hibernateProperties.setProperty("hibernate.connection.url",connectionString);
         this.hibernateProperties.setProperty("hibernate.connection.username",userName);
         this.hibernateProperties.setProperty("hibernate.connection.password",password);
-        this.hibernateProperties.setProperty("dialect","org.hibernate.dialect.MySQLDialect");
+        this.hibernateProperties.setProperty("dialect","org.hibernate.dialect.MariaDBDialect");
         this.hibernateProperties.setProperty("hibernate.connection.driver_class","com.mysql.cj.jdbc.Driver");
         this.hibernateProperties.setProperty("hibernate.hbm2ddl.auto","update");
         this.hibernateProperties.setProperty("show_sql","true");
@@ -95,18 +96,19 @@ public class PersistenceManagerMariaDB implements PersistenceManager {
         if ( !o.getClass().isAnnotationPresent(Entity.class) ) {
             log.error("You must insert the hibernate annotations to your class for use the persistence manager." + "\nReference link: https://www.tutorialspoint.com/hibernate/hibernate_annotations.htm");
         } else {
-            session.save(o);
+            session.beginTransaction();
+            session.saveOrUpdate(o);
+            session.getTransaction().commit();
+            session.close();
         }
     }
 
     @Override
-    public boolean loadObject(int id, Class objectType) {
-        return false;
-    }
-
-    @Override
-    public boolean loadObject(String key, Class objectType) {
-        return false;
+    public Object loadObject( Object id, Class obj ) {
+        if (!alive) {
+            connect();
+        }
+        return session.get(obj,id);
     }
 
     @Override
