@@ -17,21 +17,21 @@ import utils.LoggerUtils;
  *
  */
 
-public class DriverHelper {
+public class DriverFactory {
 
-    static Logger log = LoggerUtils.createLogger(DriverHelper.class);
+    static Logger log = LoggerUtils.createLogger(DriverFactory.class);
 
     public static DriverHandler createDriver ( String driverType ) {
 
         if ( StringUtils.containsIgnoreCase(driverType,"CHROME") ) {
             log.info("Creating a Chrome istance...");
-            return new DriverHandler(new ChromeDriver());
+            return new DriverHandler(new ChromeDriver(),DriverType.CHROME);
         } else if ( StringUtils.containsIgnoreCase(driverType,"FIREFOX") ) {
             log.info("Creating a Firefox istance...");
-            return new DriverHandler(new FirefoxDriver());
+            return new DriverHandler(new FirefoxDriver(),DriverType.FIREFOX);
         } else if ( StringUtils.containsIgnoreCase(driverType,"EDGE") ) {
             log.info("Creating a Edge istance...");
-            return new DriverHandler(new EdgeDriver());
+            return new DriverHandler(new EdgeDriver(),DriverType.EDGE);
         } else {
             log.error("Driver Type is not valid, Chrome, Firefox or Edge are the only supported for now, exiting...");
             System.exit(1);
@@ -43,18 +43,18 @@ public class DriverHelper {
 
         Configuration cfg = new Configuration(configurationFile);
         System.setProperty("webdriver.chrome.driver",cfg.getProperty("chromedriver.path"));
-        System.setProperty("webdriver.firefox.driver",cfg.getProperty("geckodriver.path"));
+        System.setProperty("webdriver.gecko.driver",cfg.getProperty("geckodriver.path"));
         System.setProperty("webdriver.edge.driver",cfg.getProperty("edgedriver.path"));
 
         if ( StringUtils.containsIgnoreCase(driverType,"CHROME") ) {
             log.info("Creating a Chrome istance...");
-            return new DriverHandler(new ChromeDriver(),cfg);
+            return new DriverHandler(new ChromeDriver(),cfg,DriverType.CHROME);
         } else if ( StringUtils.containsIgnoreCase(driverType,"FIREFOX") ) {
             log.info("Creating a Firefox istance...");
-            return new DriverHandler(new FirefoxDriver(),cfg);
+            return new DriverHandler(new FirefoxDriver(),cfg,DriverType.FIREFOX);
         } else if ( StringUtils.containsIgnoreCase(driverType,"EDGE") ) {
             log.info("Creating a Edge istance...");
-            return new DriverHandler(new EdgeDriver(),cfg);
+            return new DriverHandler(new EdgeDriver(),cfg,DriverType.EDGE);
         } else {
             log.error("Driver Type is not valid, Chrome, Firefox or Edge are the only supported for now, exiting...");
             System.exit(1);
@@ -66,13 +66,13 @@ public class DriverHelper {
         switch ( driverType ) {
             case CHROME:
                 log.info("Creating a Chrome istance...");
-                return new DriverHandler(new ChromeDriver());
+                return new DriverHandler(new ChromeDriver(),DriverType.CHROME);
             case EDGE:
                 log.info("Creating a Firefox istance...");
-                return new DriverHandler(new FirefoxDriver());
+                return new DriverHandler(new FirefoxDriver(),DriverType.FIREFOX);
             case FIREFOX:
                 log.info("Creating a Edge istance...");
-                return new DriverHandler(new EdgeDriver());
+                return new DriverHandler(new EdgeDriver(),DriverType.EDGE);
             default:
                 log.error("Driver Type is not valid, Chrome, Firefox or Edge are the only supported for now, exiting...");
                 System.exit(1);
@@ -90,13 +90,13 @@ public class DriverHelper {
         switch ( driverType ) {
             case CHROME:
                 log.info("Creating a Chrome istance...");
-                return new DriverHandler(new ChromeDriver(),cfg);
+                return new DriverHandler(new ChromeDriver(),cfg,DriverType.CHROME);
             case EDGE:
                 log.info("Creating a Firefox istance...");
-                return new DriverHandler(new FirefoxDriver(),cfg);
+                return new DriverHandler(new FirefoxDriver(),cfg,DriverType.FIREFOX);
             case FIREFOX:
                 log.info("Creating a Edge istance...");
-                return new DriverHandler(new EdgeDriver(),cfg);
+                return new DriverHandler(new EdgeDriver(),cfg,DriverType.EDGE);
             default:
                 log.error("Driver Type is not valid, Chrome, Firefox or Edge are the only supported for now, exiting...");
                 System.exit(1);
