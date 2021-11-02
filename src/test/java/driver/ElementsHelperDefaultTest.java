@@ -5,6 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -89,8 +90,18 @@ public class ElementsHelperDefaultTest {
     }
 
     @Test
-    public void testClickElementJS() {
+    public void getElementByText() {
+        DriverHandler driver = DriverFactory.createDriver("CHROME","src/main/resources/config/config_default.properties");
+        assertNotNull(driver);
+        assertNotNull(driver.getDriver());
+        File dummyPage = new File("src/main/resources/dummy_pages/dummy1.html");
+        assertNotNull(dummyPage);
+        assertTrue(dummyPage.exists());
+        driver.openUrl(dummyPage.getAbsolutePath());
+        assertNotNull(driver.getElementByText("PARAGRAPH"));
+        assertNotNull(driver.getElementByText("HELLO WORLD"));
     }
+
 
 
 }

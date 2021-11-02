@@ -46,4 +46,6 @@ public class DriverHandlerTest {
         edgeDriver.openUrl("https://www.google.com");
         edgeDriver.closeDriver();
     }
+
+
 }

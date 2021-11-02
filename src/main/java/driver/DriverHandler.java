@@ -4,6 +4,11 @@ import entities.Configuration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import utils.LoggerUtils;
+
+import java.util.List;
+import java.util.NoSuchElementException;
 
 
 /**
@@ -14,12 +19,13 @@ import org.openqa.selenium.WebElement;
  *
  */
 
-class DriverHandler {
+public class DriverHandler {
 
     private WebDriver driver;
     private Configuration configuration;
     private ElementsHelper elementsHelper;
     private DriverType driverType;
+    private Logger log = LoggerUtils.createLogger(this.getClass());
 
     protected DriverHandler(WebDriver driver, DriverType type ) {
         this.driver = driver;
@@ -82,7 +88,11 @@ class DriverHandler {
     }
 
     public void clickElement ( By by ) {
-        elementsHelper.clickElement(by);
+        try {
+            elementsHelper.clickElement(by);
+        } catch ( NoSuchElementException e ) {
+            log.error("The element with by " + by + " is not present.");
+        }
     }
 
     public void clickElement ( WebElement element ) {
@@ -92,5 +102,18 @@ class DriverHandler {
     public WebElement getElement ( By by ) {
         return elementsHelper.getElement(by);
     }
+
+    public WebElement getElementByText ( String text ) {
+        return elementsHelper.getElementByText(text);
+    }
+
+    public List<WebElement> getElementsByText ( String text ) {
+        return elementsHelper.getElementsByText(text);
+    }
+
+    public List<WebElement> getElementsByTag ( String tagName ) {
+        return elementsHelper.getElementsByTag(tagName);
+    }
+
 
 }
