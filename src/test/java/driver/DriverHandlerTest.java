@@ -2,6 +2,7 @@ package driver;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.TestInstance;
 
 import static org.junit.Assert.assertEquals;
@@ -44,6 +45,13 @@ public class DriverHandlerTest {
         assertNotNull(edgeDriver);
         assertEquals(edgeDriver.getDriverType(),DriverType.EDGE);
         edgeDriver.openUrl("https://www.google.com");
+        edgeDriver.closeDriver();
+    }
+
+    @AfterAll
+    public void closeAllDrivers() {
+        chromeDriver.closeDriver();
+        firefoxDriver.closeDriver();
         edgeDriver.closeDriver();
     }
 

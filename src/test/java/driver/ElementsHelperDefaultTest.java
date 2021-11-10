@@ -4,10 +4,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.io.File;
 
@@ -73,19 +70,6 @@ public class ElementsHelperDefaultTest {
     }
 
     @Test
-    public void clickElementNotFound() {
-        DriverHandler driver = DriverFactory.createDriver("CHROME","src/main/resources/config/config_default.properties");
-        assertNotNull(driver);
-        assertNotNull(driver.getDriver());
-        File dummyPage = new File("src/main/resources/dummy_pages/dummy1.html");
-        assertNotNull(dummyPage);
-        assertTrue(dummyPage.exists());
-        driver.openUrl(dummyPage.getAbsolutePath());
-        driver.getElementsHelper().clickElement(By.xpath("//input[@id='NOT_FOUND']"));
-        driver.closeDriver();
-    }
-
-    @Test
     public void testClickElement() {
     }
 
@@ -113,6 +97,7 @@ public class ElementsHelperDefaultTest {
         driver.openUrl(dummyPage.getAbsolutePath());
         assertNotNull(driver.getElementByText("PARAGRAPH"));
         assertNotNull(driver.getElementByText("HELLO WORLD"));
+        driver.closeDriver();
     }
 
 

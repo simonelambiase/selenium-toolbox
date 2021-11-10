@@ -25,7 +25,7 @@ public class ConfigurationTest {
     @Test
     public void getChromePath() {
         Assert.assertNotNull(cfg.getProperty("chromedriver.path"));
-        Assert.assertEquals("The chrome path is not the same.", "resources/webdrivers/chromedriver.exe",cfg.getProperty("chromedriver.path"));
+        Assert.assertEquals("The chrome path is not the same.", "src/main/resources/webdrivers/chromedriver.exe",cfg.getProperty("chromedriver.path"));
     }
 
     @Test
