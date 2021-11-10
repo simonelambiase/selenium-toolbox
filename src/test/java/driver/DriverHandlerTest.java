@@ -24,6 +24,17 @@ public class DriverHandlerTest {
     }
 
     @Test
+    public void initDriverWithoutConfig() {
+        DriverHandler chromeDriverNoCfg = DriverFactory.createDriver("CHROME");
+        DriverHandler firefoxDriverNoCfg = DriverFactory.createDriver("FIREFOX");
+        DriverHandler edgeDriverNoCfg = DriverFactory.createDriver("EDGE");
+        chromeDriverNoCfg.closeDriver();
+        firefoxDriverNoCfg.closeDriver();
+        edgeDriverNoCfg.closeDriver();
+    }
+
+
+    @Test
     public void openChromedriver() {
         assertNotNull(chromeDriver);
         assertEquals(chromeDriver.getDriverType(),DriverType.CHROME);

@@ -23,6 +23,11 @@ public class DriverFactory {
 
     public static DriverHandler createDriver ( String driverType ) {
 
+        log.info("Setting drivers to default packaged drivers, maybe the version can't be correct...");
+        System.setProperty("webdriver.chrome.driver","src/main/resources/webdrivers/chromedriver.exe");
+        System.setProperty("webdriver.gecko.driver","src/main/resources/webdrivers/geckodriver.exe");
+        System.setProperty("webdriver.edge.driver","src/main/resources/webdrivers/msedgedriver.exe");
+
         if ( StringUtils.containsIgnoreCase(driverType,"CHROME") ) {
             log.info("Creating a Chrome istance...");
             return new DriverHandler(new ChromeDriver(),DriverType.CHROME);
@@ -63,6 +68,12 @@ public class DriverFactory {
     }
 
     public static DriverHandler createDriver ( DriverType driverType ) {
+
+        log.info("Setting drivers to default packaged drivers, maybe the version can't be correct...");
+        System.setProperty("webdriver.chrome.driver","src/main/resources/webdrivers/chromedriver.exe");
+        System.setProperty("webdriver.gecko.driver","src/main/resources/webdrivers/geckodriver.exe");
+        System.setProperty("webdriver.edge.driver","src/main/resources/webdrivers/msedgedriver.exe");
+
         switch ( driverType ) {
             case CHROME:
                 log.info("Creating a Chrome istance...");
