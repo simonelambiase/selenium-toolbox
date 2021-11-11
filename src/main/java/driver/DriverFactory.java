@@ -8,6 +8,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.slf4j.Logger;
 import utils.LoggerUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
 /**
  *
  * @Author: Simone Lambiase
@@ -24,9 +31,9 @@ public class DriverFactory {
     public static DriverHandler createDriver ( String driverType ) {
 
         log.info("Setting drivers to default packaged drivers, maybe the version can't be correct...");
-        System.setProperty("webdriver.chrome.driver","src/main/resources/webdrivers/chromedriver.exe");
-        System.setProperty("webdriver.gecko.driver","src/main/resources/webdrivers/geckodriver.exe");
-        System.setProperty("webdriver.edge.driver","src/main/resources/webdrivers/msedgedriver.exe");
+        System.setProperty("webdriver.chrome.driver","src/main/java/resources/webdrivers/chromedriver.exe");
+        System.setProperty("webdriver.gecko.driver","src/main/java/resources/webdrivers/geckodriver.exe");
+        System.setProperty("webdriver.edge.driver","src/main/java/resources/webdrivers/msedgedriver.exe");
 
         if ( StringUtils.containsIgnoreCase(driverType,"CHROME") ) {
             log.info("Creating a Chrome istance...");
@@ -68,11 +75,10 @@ public class DriverFactory {
     }
 
     public static DriverHandler createDriver ( DriverType driverType ) {
-
         log.info("Setting drivers to default packaged drivers, maybe the version can't be correct...");
-        System.setProperty("webdriver.chrome.driver","src/main/resources/webdrivers/chromedriver.exe");
-        System.setProperty("webdriver.gecko.driver","src/main/resources/webdrivers/geckodriver.exe");
-        System.setProperty("webdriver.edge.driver","src/main/resources/webdrivers/msedgedriver.exe");
+        System.setProperty("webdriver.chrome.driver","src/main/java/resources/webdrivers/chromedriver.exe");
+        System.setProperty("webdriver.gecko.driver","src/main/java/resources/webdrivers/geckodriver.exe");
+        System.setProperty("webdriver.edge.driver","src/main/java/resources/webdrivers/msedgedriver.exe");
 
         switch ( driverType ) {
             case CHROME:

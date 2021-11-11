@@ -18,9 +18,9 @@ public class DriverHandlerTest {
 
     @Before
     public void initDriver() {
-        chromeDriver = DriverFactory.createDriver("CHROME", "src/main/resources/config/config_default.properties");
-        firefoxDriver = DriverFactory.createDriver("FIREFOX", "src/main/resources/config/config_default.properties");
-        edgeDriver = DriverFactory.createDriver("EDGE", "src/main/resources/config/config_default.properties");
+        chromeDriver = DriverFactory.createDriver("CHROME", "src/main/java/resources/config/config_default.properties");
+        firefoxDriver = DriverFactory.createDriver("FIREFOX", "src/main/java/resources/config/config_default.properties");
+        edgeDriver = DriverFactory.createDriver("EDGE", "src/main/java/resources/config/config_default.properties");
     }
 
     @Test

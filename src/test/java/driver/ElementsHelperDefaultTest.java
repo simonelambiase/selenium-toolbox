@@ -16,10 +16,10 @@ public class ElementsHelperDefaultTest {
 
     @Test
     public void getElement() {
-        DriverHandler driver = DriverFactory.createDriver("CHROME","src/main/resources/config/config_default.properties");
+        DriverHandler driver = DriverFactory.createDriver("CHROME","src/main/java/resources/config/config_default.properties");
         assertNotNull(driver);
         assertNotNull(driver.getDriver());
-        File dummyPage = new File("src/main/resources/dummy_pages/dummy1.html");
+        File dummyPage = new File("src/main/java/resources/dummy_pages/dummy1.html");
         assertNotNull(dummyPage);
         assertTrue(dummyPage.exists());
         driver.openUrl(dummyPage.getAbsolutePath());
@@ -30,10 +30,10 @@ public class ElementsHelperDefaultTest {
 
     @Test
     public void getElementVisibilityWithTimeout() {
-        DriverHandler driver = DriverFactory.createDriver("CHROME","src/main/resources/config/config_default.properties");
+        DriverHandler driver = DriverFactory.createDriver("CHROME","src/main/java/resources/config/config_default.properties");
         assertNotNull(driver);
         assertNotNull(driver.getDriver());
-        File dummyPage = new File("src/main/resources/dummy_pages/dummy1.html");
+        File dummyPage = new File("src/main/java/resources/dummy_pages/dummy1.html");
         assertNotNull(dummyPage);
         assertTrue(dummyPage.exists());
         driver.openUrl(dummyPage.getAbsolutePath());
@@ -44,10 +44,10 @@ public class ElementsHelperDefaultTest {
 
     @Test
     public void getElementPresenceWithTimeout() {
-        DriverHandler driver = DriverFactory.createDriver("CHROME","src/main/resources/config/config_default.properties");
+        DriverHandler driver = DriverFactory.createDriver("CHROME","src/main/java/resources/config/config_default.properties");
         assertNotNull(driver);
         assertNotNull(driver.getDriver());
-        File dummyPage = new File("src/main/resources/dummy_pages/dummy1.html");
+        File dummyPage = new File("src/main/java/resources/dummy_pages/dummy1.html");
         assertNotNull(dummyPage);
         assertTrue(dummyPage.exists());
         driver.openUrl(dummyPage.getAbsolutePath());
@@ -58,10 +58,10 @@ public class ElementsHelperDefaultTest {
 
     @Test
     public void clickElement() {
-        DriverHandler driver = DriverFactory.createDriver("CHROME","src/main/resources/config/config_default.properties");
+        DriverHandler driver = DriverFactory.createDriver("CHROME","src/main/java/resources/config/config_default.properties");
         assertNotNull(driver);
         assertNotNull(driver.getDriver());
-        File dummyPage = new File("src/main/resources/dummy_pages/dummy1.html");
+        File dummyPage = new File("src/main/java/resources/dummy_pages/dummy1.html");
         assertNotNull(dummyPage);
         assertTrue(dummyPage.exists());
         driver.openUrl(dummyPage.getAbsolutePath());
@@ -75,10 +75,10 @@ public class ElementsHelperDefaultTest {
 
     @Test
     public void clickElementJS() {
-        DriverHandler driver = DriverFactory.createDriver("CHROME","src/main/resources/config/config_default.properties");
+        DriverHandler driver = DriverFactory.createDriver("CHROME","src/main/java/resources/config/config_default.properties");
         assertNotNull(driver);
         assertNotNull(driver.getDriver());
-        File dummyPage = new File("src/main/resources/dummy_pages/dummy1.html");
+        File dummyPage = new File("src/main/java/resources/dummy_pages/dummy1.html");
         assertNotNull(dummyPage);
         assertTrue(dummyPage.exists());
         driver.openUrl(dummyPage.getAbsolutePath());
@@ -88,10 +88,10 @@ public class ElementsHelperDefaultTest {
 
     @Test
     public void getElementByText() {
-        DriverHandler driver = DriverFactory.createDriver("CHROME","src/main/resources/config/config_default.properties");
+        DriverHandler driver = DriverFactory.createDriver("CHROME","src/main/java/resources/config/config_default.properties");
         assertNotNull(driver);
         assertNotNull(driver.getDriver());
-        File dummyPage = new File("src/main/resources/dummy_pages/dummy1.html");
+        File dummyPage = new File("src/main/java/resources/dummy_pages/dummy1.html");
         assertNotNull(dummyPage);
         assertTrue(dummyPage.exists());
         driver.openUrl(dummyPage.getAbsolutePath());
