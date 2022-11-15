@@ -107,6 +107,12 @@ public class PersistenceManagerMariaDB implements PersistenceManager {
     }
 
     @Override
+    public Object loadObject(Class returnType) {
+        log.error("This method is not currently supported for this class " + this.getClass().getName());
+        return null;
+    }
+
+    @Override
     public Object executeQuery(String query) {
         session.beginTransaction();
         Query hQuery = session.createQuery(query);
