@@ -3,6 +3,7 @@ package driver;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 
 import static org.junit.Assert.assertEquals;
@@ -16,26 +17,13 @@ public class DriverHandlerTest {
     static DriverHandler firefoxDriver;
     static DriverHandler edgeDriver;
 
-    @Before
     public void initDriver() {
-        chromeDriver = DriverFactory.createDriver("CHROME", "src/main/java/resources/config/config_default.properties");
-        firefoxDriver = DriverFactory.createDriver("FIREFOX", "src/main/java/resources/config/config_default.properties");
-        edgeDriver = DriverFactory.createDriver("EDGE", "src/main/java/resources/config/config_default.properties");
-    }
-
-    @Test
-    public void initDriverWithoutConfig() {
-        DriverHandler chromeDriverNoCfg = DriverFactory.createDriver("CHROME");
-        DriverHandler firefoxDriverNoCfg = DriverFactory.createDriver("FIREFOX");
-        DriverHandler edgeDriverNoCfg = DriverFactory.createDriver("EDGE");
-        chromeDriverNoCfg.closeDriver();
-        firefoxDriverNoCfg.closeDriver();
-        edgeDriverNoCfg.closeDriver();
     }
 
 
     @Test
     public void openChromedriver() {
+        chromeDriver = DriverFactory.createDriver("CHROME");
         assertNotNull(chromeDriver);
         assertEquals(chromeDriver.getDriverType(),DriverType.CHROME);
         chromeDriver.openUrl("https://www.google.com");
@@ -45,6 +33,7 @@ public class DriverHandlerTest {
 
     @Test
     public void openFirefoxDriver() {
+        firefoxDriver = DriverFactory.createDriver("FIREFOX");
         assertNotNull(firefoxDriver);
         assertEquals(firefoxDriver.getDriverType(),DriverType.FIREFOX);
         firefoxDriver.openUrl("https://www.google.com");
@@ -53,6 +42,7 @@ public class DriverHandlerTest {
 
     @Test
     public void openEdgeDriver() {
+        edgeDriver = DriverFactory.createDriver("EDGE");
         assertNotNull(edgeDriver);
         assertEquals(edgeDriver.getDriverType(),DriverType.EDGE);
         edgeDriver.openUrl("https://www.google.com");
