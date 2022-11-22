@@ -10,13 +10,15 @@ import java.io.*;
 
 public class PersistenceManagerJSON implements PersistenceManager {
 
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private Gson gson = new GsonBuilder().setPrettyPrinting()
+            .create();
     private File storageDirectory;
     private File jsonFile;
     private Logger log = LoggerUtils.createLogger(this.getClass());
 
 
     public PersistenceManagerJSON(String directoryPath, String fileName) {
+
         if (!fileName.contains(".json")) {
             fileName = fileName + ".json";
         }
