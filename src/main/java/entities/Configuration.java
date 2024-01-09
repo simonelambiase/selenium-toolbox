@@ -21,6 +21,7 @@ public class Configuration {
             this.properties = new Properties();
             this.properties.load(new FileReader(fileName));
         } catch ( IOException e ) {
+            e.printStackTrace();
             empty = true;
             log.error("The property file is empty.");
         }

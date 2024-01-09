@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import utils.LoggerUtils;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,7 @@ public class ElementsHelperDefault implements ElementsHelper {
     private Logger log = LoggerUtils.createLogger(ElementsHelperDefault.class);
     private WebDriver driver;
     private WebDriverWait wait;
-    int defaultTimeout = 60;
+    Duration defaultTimeout = Duration.ofSeconds(60);
 
     public ElementsHelperDefault( WebDriver driver ) {
         this.driver = driver;
@@ -31,12 +32,12 @@ public class ElementsHelperDefault implements ElementsHelper {
 
     @Override
     public WebElement getElementVisibilityWithTimeout(By by, int timeout) {
-        return new WebDriverWait(driver,timeout).until(ExpectedConditions.visibilityOfElementLocated(by));
+        return new WebDriverWait(driver,Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
     @Override
     public WebElement getElementPresenceWithTimeout(By by, int timeout) {
-        return new WebDriverWait(driver,timeout).until(ExpectedConditions.presenceOfElementLocated(by));
+        return new WebDriverWait(driver,Duration.ofSeconds(timeout)).until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
     @Override
@@ -52,6 +53,11 @@ public class ElementsHelperDefault implements ElementsHelper {
     @Override
     public List<WebElement> getElementsByTag(String tagName) {
         return driver.findElements(By.tagName(tagName));
+    }
+
+    @Override
+    public List<WebElement> getElementsBy(By by) {
+        return driver.findElements(by);
     }
 
     @Override
@@ -95,6 +101,16 @@ public class ElementsHelperDefault implements ElementsHelper {
     public void clickElementJS (WebElement elem ) {
         JavascriptExecutor exc = (JavascriptExecutor) driver;
         exc.executeScript("arguments[0].click",elem);
+    }
+
+    @Override
+    public void fillElementByText(By by, String text) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(text);
+    }
+
+    @Override
+    public void fillElementByText(WebElement elem, String text) {
+        elem.sendKeys(text);
     }
 
 }

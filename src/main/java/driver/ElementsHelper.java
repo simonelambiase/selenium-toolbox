@@ -18,11 +18,15 @@ public interface ElementsHelper {
     WebElement getElementByText ( String text );
     List<WebElement> getElementsByText (String text );
     List<WebElement> getElementsByTag ( String tagName );
+    List<WebElement> getElementsBy ( By by );
     Optional<String> getAttribute (WebElement elem, String attributeName );
     Optional<String> getAttribute ( By by, String attributeName );
     void clickElement(By by);
     void clickElement(WebElement element);
     void clickElementJS ( By by );
     void clickElementJS (WebElement elem );
+
+    void fillElementByText ( By by, String text );
+    void fillElementByText ( WebElement elem, String text );
 
 }
