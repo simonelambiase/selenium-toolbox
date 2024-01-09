@@ -1,14 +1,23 @@
 package driver;
 
 import entities.Configuration;
+import entities.WebDriverConfiguration;
+import org.apache.zookeeper.Op;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.v85.network.Network;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import utils.LoggerUtils;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 /**
@@ -22,7 +31,7 @@ import java.util.NoSuchElementException;
 public class DriverHandler {
 
     private WebDriver driver;
-    private Configuration configuration;
+    private WebDriverConfiguration configuration;
     private ElementsHelper elementsHelper;
     private DriverType driverType;
     private Logger log = LoggerUtils.createLogger(this.getClass());
@@ -33,14 +42,7 @@ public class DriverHandler {
         this.elementsHelper = new ElementsHelperDefault(driver);
     }
 
-    protected DriverHandler(WebDriver driver, String configurationFile, DriverType type  ) {
-        this.driver = driver;
-        this.configuration = new Configuration(configurationFile);
-        this.driverType = type;
-        this.elementsHelper = new ElementsHelperDefault(driver);
-    }
-
-    protected DriverHandler(WebDriver driver, Configuration configuration, DriverType type  ) {
+    protected DriverHandler(WebDriver driver, WebDriverConfiguration configuration, DriverType type  ) {
         this.driver = driver;
         this.configuration = configuration;
         this.driverType = type;
@@ -55,16 +57,24 @@ public class DriverHandler {
         this.driver = driver;
     }
 
-    public Configuration getConfiguration() {
+    public WebDriverConfiguration getConfiguration() {
         return configuration;
     }
 
-    public void setConfiguration(Configuration configuration) {
+    public void setConfiguration(WebDriverConfiguration configuration) {
         this.configuration = configuration;
     }
 
-    public void setConfigurationFileName ( String configurationFileName ) {
-        this.configuration = new Configuration(configurationFileName);
+    public void setElementsHelper(ElementsHelper elementsHelper) {
+        this.elementsHelper = elementsHelper;
+    }
+
+    public Logger getLog() {
+        return log;
+    }
+
+    public void setLog(Logger log) {
+        this.log = log;
     }
 
     public DriverType getDriverType() {
@@ -103,6 +113,10 @@ public class DriverHandler {
         return elementsHelper.getElement(by);
     }
 
+    public List<WebElement> getElementsBy ( By by ) {
+        return elementsHelper.getElementsBy(by);
+    }
+
     public WebElement getElementByText ( String text ) {
         return elementsHelper.getElementByText(text);
     }
@@ -113,6 +127,43 @@ public class DriverHandler {
 
     public List<WebElement> getElementsByTag ( String tagName ) {
         return elementsHelper.getElementsByTag(tagName);
+    }
+
+    public void fillElementByText(By by, String text) {
+        elementsHelper.fillElementByText(by,text);
+    }
+
+    public void fillElementByText(WebElement elem, String text) {
+        elementsHelper.fillElementByText(elem,text);
+    }
+
+    public void enableNetworkTracking() {
+        DevTools devTools;
+        switch ( this.driverType ) {
+            case CHROME:
+                ChromeDriver chromeDriver = (ChromeDriver) this.driver;
+                devTools = chromeDriver.getDevTools();
+                devTools.createSession();
+                devTools.send(Network.enable(Optional.empty(),Optional.empty(),Optional.empty()));
+                devTools.addListener(Network.responseReceived(), System.out::println);
+                break;
+            case EDGE:
+                EdgeDriver edgeDriver = (EdgeDriver) this.driver;
+                devTools = edgeDriver.getDevTools();
+                devTools.createSession();
+                devTools.send(Network.enable(Optional.empty(),Optional.empty(),Optional.empty()));
+                devTools.addListener(Network.responseReceived(), System.out::println);
+                break;
+            case FIREFOX:
+                FirefoxDriver firefoxDriver = (FirefoxDriver) this.driver;
+                devTools = firefoxDriver.getDevTools();
+                devTools.createSession();
+                devTools.send(Network.enable(Optional.empty(),Optional.empty(),Optional.empty()));
+                devTools.addListener(Network.responseReceived(), responseReceived -> {
+                    System.out.println(responseReceived.getResponse());
+                });
+                break;
+        }
     }
 
 
