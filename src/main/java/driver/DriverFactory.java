@@ -1,34 +1,23 @@
 package driver;
 
-import entities.Configuration;
 import entities.WebDriverConfiguration;
 import org.apache.commons.lang3.StringUtils;
-import org.checkerframework.checker.units.qual.C;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.manager.SeleniumManager;
 import org.slf4j.Logger;
 import utils.LoggerUtils;
 import io.github.bonigarcia.wdm.WebDriverManager;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 
 /**
  *
  * @Author: Simone Lambiase
  *
- * This class is the Driver Factory, the user must use this class for create an istance of the DriverHandler.
- * The user can make a instance without a configuration file but he need also to configure himself the path of the drivers.
+ * This class is the Driver Factory, the user must use this class for create an instance of the DriverHandler.
+ * The user can make an instance without a configuration file, but he need also to configure himself the path of the drivers.
  *
  */
 

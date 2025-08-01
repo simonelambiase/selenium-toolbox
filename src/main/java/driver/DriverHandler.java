@@ -1,14 +1,16 @@
 package driver;
 
+import com.mysql.cj.exceptions.WrongArgumentException;
 import entities.Configuration;
 import entities.WebDriverConfiguration;
+import org.apache.hc.core5.http.MethodNotSupportedException;
 import org.apache.zookeeper.Op;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.v85.network.Network;
+import org.openqa.selenium.devtools.v138.network.Network;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -144,24 +146,17 @@ public class DriverHandler {
                 ChromeDriver chromeDriver = (ChromeDriver) this.driver;
                 devTools = chromeDriver.getDevTools();
                 devTools.createSession();
-                devTools.send(Network.enable(Optional.empty(),Optional.empty(),Optional.empty()));
+                devTools.send(Network.enable(Optional.empty(),Optional.empty(),Optional.empty(),Optional.empty()));
                 devTools.addListener(Network.responseReceived(), System.out::println);
                 break;
             case EDGE:
                 EdgeDriver edgeDriver = (EdgeDriver) this.driver;
                 devTools = edgeDriver.getDevTools();
                 devTools.createSession();
-                devTools.send(Network.enable(Optional.empty(),Optional.empty(),Optional.empty()));
+                devTools.send(Network.enable(Optional.empty(),Optional.empty(),Optional.empty(),Optional.empty()));
                 devTools.addListener(Network.responseReceived(), System.out::println);
                 break;
             case FIREFOX:
-                FirefoxDriver firefoxDriver = (FirefoxDriver) this.driver;
-                devTools = firefoxDriver.getDevTools();
-                devTools.createSession();
-                devTools.send(Network.enable(Optional.empty(),Optional.empty(),Optional.empty()));
-                devTools.addListener(Network.responseReceived(), responseReceived -> {
-                    System.out.println(responseReceived.getResponse());
-                });
                 break;
         }
     }
